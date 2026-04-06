@@ -1,6 +1,11 @@
+import {Link} from "react-router"
+
 const Navbar = () => {
   return (
-    <div>N</div>
+    <nav className="navbar">
+      <Link to="/">
+      <p> ResumeKnight </p></Link>
+    </nav>
   )
 }
 
