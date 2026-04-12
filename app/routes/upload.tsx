@@ -6,7 +6,6 @@ import { convertPdfToImage } from "~/lib/pdf2img";
 import { usePuterStore } from "~/lib/puter";
 import { generateUUID } from "~/lib/utils";
 import { prepareInstructions } from "../../constants";
-import { json } from "stream/consumers";
 
 const upload = () => {
   const {auth, isLoading, fs, ai, kv} = usePuterStore()
@@ -32,7 +31,7 @@ const upload = () => {
 
     setStatusText("Converting to image ...");
 
-    const imageFile = await convertPdfToImage(uploadedFile);
+    const imageFile = await convertPdfToImage(file);
     if(!imageFile.file) {
         setStatusText("Error: Failed to convert PDF to image.");
         setIsProcessing(false);
@@ -79,6 +78,7 @@ const upload = () => {
 
     setStatusText("Analysis complete! redirecting ...");
     console.log(data)
+    navigate(`/resume-review/${uuid}`);
   }
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -105,17 +105,13 @@ const upload = () => {
           {isProcessing ? (
             <>
               <h2>{statusText}</h2>
-              <img src="/images/resume-scan.gif" className="w-full"></img>
+              <img src="/images/resume-scan.gif" className="w-full"/>
             </>
           ) : (
             <h2>Upload your resume to get your ATS score</h2>
           )}{
             !isProcessing && (
                 <form id="upload-form" onSubmit={handleSubmit} className="flex flex-col gap-4 mt-8">
-                    <div className="form-div">
-                        <label htmlFor="company-name">Company Name</label>
-                        <input type="text" id="company-name" name="company-name" placeholder="Company Name"/>
-                    </div>
                     <div className="form-div">
                         <label htmlFor="company-name">Company Name</label>
                         <input type="text" id="company-name" name="company-name" placeholder="Company Name"/>
