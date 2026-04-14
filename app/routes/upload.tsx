@@ -32,6 +32,7 @@ const upload = () => {
     setStatusText("Converting to image ...");
 
     const imageFile = await convertPdfToImage(file);
+    console.log(imageFile)
     if(!imageFile.file) {
         setStatusText("Error: Failed to convert PDF to image.");
         setIsProcessing(false);
@@ -84,8 +85,10 @@ const upload = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget.closest('form')
+    console.log(form)
     if(!form) return 
     const formData = new FormData(form)
+    console.log(formData)
 
     const companyName = formData.get('company-name') as string
     const jobTitle = formData.get('job-title') as string
